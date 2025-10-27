@@ -1,25 +1,19 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 import pandas as pd
-import os
 from django.conf import settings
 
-# Create your views here.
-
 def get_filters(request):
-    """Return available filter options for the dashboard"""
     try:
-        # Load the dataset
-        csv_path = os.path.join(settings.BASE_DIR, 'dashboard', 'data', 'fmcg_dataset.csv')
+        csv_path = settings.BASE_DIR / 'dashboard' / 'data' / 'fmcg_dataset.csv'
         df = pd.read_csv(csv_path)
         
         # Extract unique values for each filter
         filters = {
-            'brands': sorted(df['Brand'].unique().tolist()),
-            'pack_types': sorted(df['PackType'].unique().tolist()),
-            'ppgs': sorted(df['PPG'].unique().tolist()),
-            'channels': sorted(df['Channel'].unique().tolist()),
-            'years': sorted(df['Year'].unique().tolist())
+            'brands': sorted([x for x in df['Brand'].unique().tolist() if pd.notna(x)]),
+            'pack_types': sorted([x for x in df['PackType'].unique().tolist() if pd.notna(x)]),
+            'ppgs': sorted([x for x in df['PPG'].unique().tolist() if pd.notna(x)]),
+            'channels': sorted([x for x in df['Channel'].unique().tolist() if pd.notna(x)]),
+            'years': sorted([int(x) for x in df['Year'].unique().tolist() if pd.notna(x)])
         }
         
         return JsonResponse(filters)
@@ -27,10 +21,8 @@ def get_filters(request):
         return JsonResponse({'error': str(e)}, status=500)
 
 def get_chart_data(request):
-    """Return chart data based on selected filters"""
     try:
-        # Load the dataset
-        csv_path = os.path.join(settings.BASE_DIR, 'dashboard', 'data', 'fmcg_dataset.csv')
+        csv_path = settings.BASE_DIR / 'dashboard' / 'data' / 'fmcg_dataset.csv'
         df = pd.read_csv(csv_path)
         
         # Apply filters if provided
@@ -71,8 +63,8 @@ def get_chart_data(request):
         chart_data['year_wise_sales'] = sales_by_year.to_dict('records')
         
         # Monthly Sales Trend (Line)
-        df['YearMonth'] = df['Year'].astype(str) + '-' + df['Month'].astype(str).str.zfill(2)
-        monthly_sales = df.groupby('YearMonth')['SalesValue'].sum().reset_index()
+        df['YearMonth'] = df.apply(lambda x: f"{int(x['Year'])}-{int(x['Month']):02d}" if pd.notna(x['Year']) and pd.notna(x['Month']) else None, axis=1)
+        monthly_sales = df[df['YearMonth'].notna()].groupby('YearMonth')['SalesValue'].sum().reset_index()
         monthly_sales.columns = ['YearMonth', 'Sales Value']
         chart_data['monthly_sales'] = monthly_sales.to_dict('records')
         
