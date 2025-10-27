@@ -62,3 +62,4 @@
 - Make sure the CSV file exists at: `dashboard/data/fmcg_dataset.csv`
 - Check that CORS is properly configured in Django settings
 
+
