@@ -4,6 +4,15 @@ A full-stack Exploratory Data Analysis (EDA) web application using React and Dja
 The goal was to build an interactive Exploratory Data Analysis (EDA) dashboard where users can dynamically explore sales data using multiple filters (channel, brand, pack type, etc.) and visualize insights across time periods.
 The focus was on combining clean UI, real-time interactivity, and modular data flow to simulate the analytical experience of tools like Tableau or Power BI, but within a web environment.
 
+Tech Stack:
+Django 5.2.7
+Pandas
+SQLite
+django-cors-headers (CORS)
+React 19.2.0
+Recharts (charts)
+React Select (filters)
+
 - Each chart (bar, line, etc.) and filter panel is a standalone React component, enabling easy maintenance and scalability.
 - Filters in the sidebar update backend queries via REST API calls, ensuring only relevant data is fetched and rendered.
 - Backend endpoints were optimized for grouped aggregations (e.g., year-wise, brand-wise sales) to reduce frontend computation.
