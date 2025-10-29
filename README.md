@@ -1,4 +1,5 @@
 # eda-dashboard-kaavya-nair
+*NOTE:FULL CODE ON BRANCH2*
 A full-stack Exploratory Data Analysis (EDA) web application using React and Django for easy and interactive data visualisation.
 
 The goal was to build an interactive Exploratory Data Analysis (EDA) dashboard where users can dynamically explore sales data using multiple filters (channel, brand, pack type, etc.) and visualize insights across time periods.
