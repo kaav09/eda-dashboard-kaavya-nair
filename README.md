@@ -5,12 +5,12 @@ The goal was to build an interactive Exploratory Data Analysis (EDA) dashboard w
 The focus was on combining clean UI, real-time interactivity, and modular data flow to simulate the analytical experience of tools like Tableau or Power BI, but within a web environment.
 
 Tech Stack:
-Django 5.2.7
-Pandas
-SQLite
-django-cors-headers (CORS)
-React 19.2.0
-Recharts (charts)
+Django 5.2.7,
+Pandas,
+SQLite,
+django-cors-headers (CORS),
+React 19.2.0,
+Recharts (charts),
 React Select (filters)
 
 - Each chart (bar, line, etc.) and filter panel is a standalone React component, enabling easy maintenance and scalability.
